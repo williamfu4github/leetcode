@@ -1,0 +1,26 @@
+/*
+span around center approach
+O(n^2) time
+O(1) space
+There is a O(n) time, O(n) space algorithm called Manacher's algorithm
+*/
+
+class Solution {
+public:
+    string longestPalindrome(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        string longest;
+        for (int i = 0; i < sSize * 2; i ++) {
+            int left = i / 2;
+            int right = left + i % 2;
+            while ((left >= 0) && (right < sSize) && (s[left] == s[right])) {
+                left --;
+                right ++;
+            }
+            if (right - left - 1 > static_cast<int>(longest.size())) {
+                longest = s.substr(left + 1, right - left - 1);
+            }
+        }
+        return longest;
+    }
+};

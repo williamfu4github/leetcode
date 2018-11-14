@@ -1,0 +1,35 @@
+/*
+Solution 767 - Reorganize String
+greedy approach, use a priority queue to decide next most frequent letter
+O(n*loga) time, where a is the size of the alphabet set
+O(a) space, if output space doesn't count
+can also use a scramble string approach, similar efficiency
+*/
+
+class Solution {
+public:
+    string reorganizeString(const string& S) {
+        unordered_map<char, int> charCount;    // <char, count>
+        for (char c : S) {
+            charCount[c] ++;
+        }
+        priority_queue<pair<int, char>> pq;
+        for (pair<char, int> e : charCount) {
+            pq.push(make_pair(e.second, e.first));
+        }
+        string output;
+        pair<int, char> previous = make_pair(0, '\0');
+        // invariant: all elements in pq has count > 0
+        while (!pq.empty()) {
+            pair<int, char> current = pq.top();
+            pq.pop();
+            if (previous.first > 0) {
+                pq.push(previous);
+            }
+            output += current.second;
+            current.first --;
+            previous = current;
+        }
+        return ((output.size() == S.size()) ? output : "");
+    }
+};

@@ -1,0 +1,16 @@
+/*
+Solution 189 - Rotate Array
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        int numsSize = static_cast<int>(nums.size());
+        k %= numsSize;
+        std::reverse(nums.begin(), nums.end());
+        std::reverse(nums.begin(), nums.begin() + k);
+        std::reverse(nums.begin() + k, nums.end());
+    }
+};

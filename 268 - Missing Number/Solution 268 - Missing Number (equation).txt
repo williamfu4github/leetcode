@@ -1,0 +1,14 @@
+/*
+Solution 268 - Missing Number
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    int missingNumber(const vector<int>& nums) {
+        int numsSize = static_cast<int>(nums.size());
+        int sum = std::accumulate(nums.cbegin(), nums.cend(), 0);
+        return (1 + numsSize) * numsSize / 2 - sum;
+    }
+};

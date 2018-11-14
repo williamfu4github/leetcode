@@ -1,0 +1,50 @@
+/*
+Solution 527 - Word Abbreviation
+greedy approach, resolve conflict when encoutered
+O(m*n) time, where m is size of a word, n is size of dict
+O(n) space
+can also use a trie to get longest common prefix within a group (same initial, same ending and same length), with the same time and space efficiency
+*/
+
+class Solution {
+private:
+    string getAbbr(const string& word, int prefixSize) {
+        int wordSize = static_cast<int>(word.size());
+        if (wordSize - prefixSize <= 2) {
+            return word;
+        }
+        return word.substr(0, prefixSize) + std::to_string(wordSize - prefixSize - 1) + word.back();
+    }
+    
+public:
+    vector<string> wordsAbbreviation(const vector<string>& dict) {
+        using Iterator = unordered_multimap<string, int>::const_iterator;
+        int dictSize = static_cast<int>(dict.size());
+        vector<pair<string, int>> candidateAbbrs;    // <abbr, prefixSize>
+        unordered_multimap<string, int> abbrMap;    // <abbr, dictIndex>
+        for (int i = 0; i < dictSize; i ++) {
+            string candidate = this->getAbbr(dict[i], 1);
+            candidateAbbrs.push_back(make_pair(candidate, 1));
+            abbrMap.insert(make_pair(candidate, i));
+        }
+        vector<string> finalAbbrs;
+        for (int i = 0; i < dictSize; i ++) {
+            while (abbrMap.count(candidateAbbrs[i].first) > 1) {
+                pair<Iterator, Iterator> sameAbbrs = abbrMap.equal_range(candidateAbbrs[i].first);
+                // can't change multimap with iterator due to iterator validity issue
+                vector<int> sameAbbrIndexes;
+                for (Iterator it = sameAbbrs.first; it != sameAbbrs.second; it ++) {
+                    sameAbbrIndexes.push_back(it->second);
+                }
+                for (int index : sameAbbrIndexes) {
+                    int prefixSize = candidateAbbrs[index].second + 1;
+                    string candidate = this->getAbbr(dict[index], prefixSize);
+                    candidateAbbrs[index] = make_pair(candidate, prefixSize);
+                    abbrMap.insert(make_pair(candidate, index));
+                }
+            }
+            finalAbbrs.push_back(candidateAbbrs[i].first);
+        }
+        return finalAbbrs;
+    }
+};

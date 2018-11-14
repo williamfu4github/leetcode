@@ -1,0 +1,36 @@
+/*
+Solution 347 - Top K Frequent Elements
+bucket sort approach
+O(n) time
+O(n) space
+can also use selection partition approach
+*/
+
+class Solution {
+public:
+    vector<int> topKFrequent(const vector<int>& nums, int k) {
+        using Iterator = unordered_multimap<int, int>::const_iterator;
+        unordered_map<int, int> numCount;    // <num, count>
+        for (int num : nums) {
+            numCount[num] ++;
+        }
+        unordered_multimap<int, int> buckets;    // <count, num>
+        for (pair<int, int> e : numCount) {
+            buckets.insert(make_pair(e.second, e.first));
+        }
+        int numsSize = static_cast<int>(nums.size());
+        vector<int> output;
+        int i = numsSize;
+        while ((k > 0) && (i > 0)) {
+            if (buckets.count(i) > 0) {
+                pair<Iterator, Iterator> sameFrequentNums = buckets.equal_range(i);
+                for (Iterator it = sameFrequentNums.first; it != sameFrequentNums.second; it ++) {
+                    output.push_back(it->second);
+                    k --;
+                }
+            }
+            i --;
+        }
+        return output;
+    }
+};

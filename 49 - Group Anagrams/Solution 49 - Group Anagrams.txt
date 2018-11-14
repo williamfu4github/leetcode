@@ -1,0 +1,26 @@
+/*
+Solution 49 - Group Anagrams
+sort the string to find signature
+could also use count sort to reduce to O(n*k) time, if input is limited to ASCII letters
+O(n*klogk) time, where n is number of strings, k is the longest string
+O(n*k) space, to store the output
+*/
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(const vector<string>& strs) {
+        vector<vector<string>> output;
+        unordered_map<string, int> indexMap;    // <signature, index>
+        for (const string& s : strs) {
+            string signature = s;
+            std::sort(signature.begin(), signature.end());
+            if (indexMap.count(signature) == 0) {
+                int index = static_cast<int>(indexMap.size());
+                indexMap[signature] = index;
+                output.push_back(vector<string>{});
+            }
+            output[indexMap[signature]].push_back(s);
+        }
+        return output;
+    }
+};

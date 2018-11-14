@@ -1,0 +1,25 @@
+/*
+Solution 415 - Add Strings
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    string addStrings(const string& num1, const string& num2) {
+        int num1Size = static_cast<int>(num1.size());
+        int num2Size = static_cast<int>(num2.size());
+        string output;
+        int i = num1Size - 1;
+        int j = num2Size - 1;
+        int prop = 0;
+        while ((i >= 0) || (j >= 0) || (prop == 1)) {
+            int sum = ((i >= 0) ? num1[i] - '0' : 0) + ((j >= 0) ? num2[j] - '0' : 0) + prop;
+            output = std::to_string(sum % 10) + output;
+            prop = sum / 10;
+            i --;
+            j --;
+        }
+        return output;
+    }
+};

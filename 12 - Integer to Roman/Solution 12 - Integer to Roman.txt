@@ -1,0 +1,23 @@
+/*
+Solution 12 - Integer to Roman
+pattern finding
+*/
+
+class Solution {
+public:
+    string intToRoman(int num) {
+        array<string, 10> ones{"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+        array<string, 10> tens{"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+        array<string, 10> hundreds{"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+        array<string, 4> thousands{"", "M", "MM", "MMM"};
+        string output;
+        output = ones[num % 10] + output;
+        num /= 10;
+        output = tens[num % 10] + output;
+        num /= 10;
+        output = hundreds[num % 10] + output;
+        num /= 10;
+        output = thousands[num % 10] + output;
+        return output;
+    }
+};

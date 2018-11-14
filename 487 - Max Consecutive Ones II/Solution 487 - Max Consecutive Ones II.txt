@@ -1,0 +1,24 @@
+/*
+Solution 487 - Max Consecutive Ones II
+sliding window approach
+O(n) time, one pass
+O(1) space
+*/
+
+class Solution {
+public:
+    int findMaxConsecutiveOnes(const vector<int>& nums) {
+        int numsSize = static_cast<int>(nums.size());
+        int longest = 0;
+        int i = -1;
+        int flip = -1;
+        for (int j = 0; j < numsSize; j ++) {
+            if (nums[j] == 0) {
+                i = flip;
+                flip = j;
+            }
+            longest = std::max(longest, j - i);
+        }
+        return longest;
+    }
+};

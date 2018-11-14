@@ -1,0 +1,46 @@
+/*
+Solution 94 - Binary Tree Inorder Traversal
+Morris traversal
+O(n) time since all edges will be traverse at most twice
+O(1) space
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> nums;
+        TreeNode* current = root;
+        while (current != NULL) {
+            if (current->left == NULL) {
+                nums.push_back(current->val);
+                current = current->right;
+            }
+            else {
+                TreeNode* previous = current->left;
+                while ((previous->right != NULL) && (previous->right != current)) {
+                    previous = previous->right;
+                }
+                if (previous->right == NULL) {
+                    previous->right = current;
+                    current = current->left;
+                }
+                else {
+                    previous->right = NULL;
+                    nums.push_back(current->val);
+                    current = current->right;
+                }
+            }
+        }
+        return nums;
+    }
+};

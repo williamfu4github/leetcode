@@ -1,0 +1,25 @@
+/*
+Solution 67 - Add Binary
+O(n) time
+O(n) space
+*/
+
+class Solution {
+public:
+    string addBinary(const string& a, const string& b) {
+        int aSize = static_cast<int>(a.size());
+        int bSize = static_cast<int>(b.size());
+        string output;
+        int i = aSize - 1;
+        int j = bSize - 1;
+        int prop = 0;
+        while ((i >= 0) || (j >= 0) || (prop == 1)) {
+            int sum = ((i >= 0) ? (a[i] - '0') : 0) + ((j >= 0) ? (b[j] - '0') : 0) + prop;
+            output = std::to_string(sum % 2) + output;
+            prop = sum / 2;
+            i --;
+            j --;
+        }
+        return output;
+    }
+};

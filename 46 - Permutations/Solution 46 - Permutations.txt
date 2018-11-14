@@ -1,0 +1,27 @@
+/*
+Solution 46 - Permutations
+recursive DFS approach to swap values
+*/
+
+class Solution {
+private:
+    void dfs(vector<vector<int>>& output, vector<int>& nums, int index) {
+        int numsSize = static_cast<int>(nums.size());
+        if (index == numsSize) {
+            output.push_back(nums);
+            return;
+        }
+        for (int i = index; i < numsSize; i ++) {
+            std::swap(nums[index], nums[i]);
+            this->dfs(output, nums, index + 1);
+            std::swap(nums[index], nums[i]);
+        }
+    }
+    
+public:
+    vector<vector<int>> permute(vector<int> nums) {
+        vector<vector<int>> output;
+        this->dfs(output, nums, 0);
+        return output;
+    }
+};

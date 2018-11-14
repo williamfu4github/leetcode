@@ -1,0 +1,40 @@
+/*
+Solution 288 - Unique Word Abbreviation
+O(n) time preprocessing, O(1) time isUnique, if dictionary contains no duplicates
+O(n) space
+*/
+
+class ValidWordAbbr {
+private:
+    unordered_multimap<string, string> abbrMap;
+
+private:
+    string convertToAbbr(const string& word) {
+        int wordSize = static_cast<int>(word.size());
+        if (wordSize <= 2) {
+            return word;
+        }
+        return word.front() + std::to_string(wordSize - 2) + word.back();
+    }
+    
+public:
+    ValidWordAbbr(const vector<string>& dictionary) {
+        for (const string& word : dictionary) {
+            abbrMap.insert(make_pair(this->convertToAbbr(word), word));
+        }
+    }
+    
+    ~ValidWordAbbr() {
+    }
+    
+    bool isUnique(const string& word) {
+        using Iterator = unordered_multimap<string, string>::const_iterator;
+        pair<Iterator, Iterator> sameAbbrWords = abbrMap.equal_range(this->convertToAbbr(word));
+        for (Iterator it = sameAbbrWords.first; it != sameAbbrWords.second; it ++) {
+            if (it->second != word) {
+                return false;
+            }
+        }
+        return true;
+    }
+};

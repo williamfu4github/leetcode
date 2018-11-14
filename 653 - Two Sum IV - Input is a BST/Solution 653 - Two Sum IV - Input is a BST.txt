@@ -1,0 +1,63 @@
+/*
+Solution 653 - Two Sum IV - Input is a BST
+inorder traverse the tree to a vector, then reduced to a two sum sorted problem
+O(n) time
+O(n) space
+can use stacks and pointers to emulate iterators from both ends, which will reduce to O(logn) space for balanced tree
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        vector<int> nums;
+        // Morris traversal algorithm
+        TreeNode* current = root;
+        while (current != NULL) {
+            if (current->left == NULL) {
+                nums.push_back(current->val);
+                current = current->right;
+            }
+            else {
+                TreeNode* previous = current->left;
+                while ((previous->right != NULL) && (previous->right != current)) {
+                    previous = previous->right;
+                }
+                if (previous->right == NULL) {
+                    previous->right = current;
+                    current = current->left;
+                }
+                else {
+                    previous->right = NULL;
+                    nums.push_back(current->val);
+                    current = current->right;
+                }
+            }
+        }
+        // two sum sorted algorithm
+        int numsSize = static_cast<int>(nums.size());
+        int i = 0;
+        int j = numsSize - 1;
+        while (i < j) {
+            if (nums[i] + nums[j] < k) {
+                i ++;
+            }
+            else if (nums[i] + nums[j] == k) {
+                return true;
+            }
+            else {
+                j --;
+            }
+        }
+        return false;
+    }
+};

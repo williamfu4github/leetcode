@@ -1,0 +1,21 @@
+/*
+Solution 1 - Two Sum
+use hash_map to find complement
+O(n) time, one pass
+O(n) space
+*/
+
+class Solution {
+public:
+    vector<int> twoSum(const vector<int>& nums, int target) {
+        int numsSize = static_cast<int>(nums.size());
+        unordered_map<int, int> indexMap;    // <num, index>
+        for (int i = 0; i < numsSize; i ++) {
+            if (indexMap.count(target - nums[i]) == 1) {
+                return vector<int>{indexMap[target - nums[i]], i};
+            }
+            indexMap[nums[i]] = i;
+        }
+        return vector<int>{};
+    }
+};

@@ -1,0 +1,29 @@
+/*
+Solution 38 - Count and Say
+pattern finding
+*/
+
+class Solution {
+public:
+    string countAndSay(int n) {
+        string s = "1";
+        // invariant: s is non-empty
+        for (int i = 1; i < n; i ++) {
+            int sSize = static_cast<int>(s.size());
+            string newS;
+            int count = 1;
+            for (int j = 1; j < sSize; j ++) {
+                if (s[j] == s[j - 1]) {
+                    count ++;
+                }
+                else {
+                    newS = newS + std::to_string(count) + s[j - 1];
+                    count = 1;
+                }
+            }
+            newS = newS + std::to_string(count) + s.back();
+            s = newS;
+        }
+        return s;
+    }
+};

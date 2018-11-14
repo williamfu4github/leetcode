@@ -1,0 +1,21 @@
+/*
+Solution 186 - Reverse Words in a String II
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    void reverseWords(vector<char>& str) {
+        std::reverse(str.begin(), str.end());
+        int strSize = static_cast<int>(str.size());
+        int i = 0;
+        for (int j = 0; j < strSize; j ++) {
+            if (str[j] == ' ') {
+                std::reverse(str.begin() + i, str.begin() + j);
+                i = j + 1;
+            }
+        }
+        std::reverse(str.begin() + i, str.end());
+    }
+};

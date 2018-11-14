@@ -1,0 +1,39 @@
+/*
+Solution 358 - Rearrange String k Distance Apart
+greedy approach, use a priority queue to decide next most frequent letter
+O(n*loga) time, where a is the size of the alphabet set
+O(a + k) space, if output space doesn't count
+*/
+
+class Solution {
+public:
+    string rearrangeString(const string& s, int k) {
+        // waitList deque need to be non-empty
+        if (k < 2) {
+            return s;
+        }
+        unordered_map<char, int> charCount;    // <char, count>
+        for (char c : s) {
+            charCount[c] ++;
+        }
+        priority_queue<pair<int, char>> pq;
+        for (pair<char, int> e : charCount) {
+            pq.push(make_pair(e.second, e.first));
+        }
+        string output;
+        deque<pair<int, char>> waitList(k - 1, make_pair(0, '\0'));
+        // invariant: all elements in pq has count > 0
+        while (!pq.empty()) {
+            pair<int, char> current = pq.top();
+            pq.pop();
+            if (waitList.front().first > 0) {
+                pq.push(waitList.front());
+            }
+            waitList.pop_front();
+            output += current.second;
+            current.first --;
+            waitList.push_back(current);
+        }
+        return ((output.size() == s.size()) ? output : "");
+    }
+};

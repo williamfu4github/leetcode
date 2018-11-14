@@ -1,0 +1,58 @@
+/*
+Solution 15 - 3Sum
+sort the list first
+fix one index, then reduced to two-sum sorted problems
+need to skip duplicate numbers in each find
+O(n^2) time
+O(1) space, if output space doesn't count and input is mutable
+*/
+
+class Solution {
+private:
+    // PRE: index point to a valid position
+    int nextRightIndex(const vector<int>& nums, int index) {
+        int numsSize = static_cast<int>(nums.size());
+        index ++;
+        while ((index < numsSize) && (nums[index] == nums[index - 1])) {
+            index ++;
+        }
+        return index;
+    }
+    
+    // PRE: index point to a valid position
+    int nextLeftIndex(const vector<int>& nums, int index) {
+        int numsSize = static_cast<int>(nums.size());
+        index --;
+        while ((index >= 0) && (nums[index] == nums[index + 1])) {
+            index --;
+        }
+        return index;
+    }
+    
+public:
+    vector<vector<int>> threeSum(vector<int> nums) {
+        int numsSize = static_cast<int>(nums.size());
+        std::sort(nums.begin(), nums.end());
+        vector<vector<int>> output;
+        int k = 0;
+        while (k < numsSize) {
+            int i = k + 1;
+            int j = numsSize - 1;
+            while (i < j) {
+                if (nums[k] + nums[i] + nums[j] < 0) {
+                    i = this->nextRightIndex(nums, i);
+                }
+                else if (nums[k] + nums[i] + nums[j] == 0) {
+                    output.push_back(vector<int>{nums[k], nums[i], nums[j]});
+                    i = this->nextRightIndex(nums, i);
+                    j = this->nextLeftIndex(nums, j);
+                }
+                else {
+                    j = this->nextLeftIndex(nums, j);
+                }
+            }
+            k = this->nextRightIndex(nums, k);
+        }
+        return output;
+    }
+};

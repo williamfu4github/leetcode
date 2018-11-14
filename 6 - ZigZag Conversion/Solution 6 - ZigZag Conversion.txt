@@ -1,0 +1,34 @@
+/*
+Solution 6 - ZigZag Conversion
+O(n) time
+O(1) space, if output space doesn't count
+*/
+
+class Solution {
+private:
+    void convertLine(string& output, const string& s, int index, int step1, int step2) {
+        int sSize = static_cast<int>(s.size());
+        bool toggle = true;
+        while (index < sSize) {
+            output += s[index];
+            index += (toggle ? step1 : step2);
+            toggle = !toggle;
+        }
+    }
+    
+public:
+    string convert(const string& s, int numRows) {
+        // (numRows == 1) is a special case to avoid baseStep of 0
+        if (numRows < 2) {
+            return s;
+        }
+        string output;
+        int baseStep = (numRows - 1) * 2;
+        this->convertLine(output, s, 0, baseStep, baseStep);
+        for (int i = 1; i < numRows - 1; i ++) {
+            this->convertLine(output, s, i, baseStep - 2 * i, 2 * i);
+        }
+        this->convertLine(output, s, numRows - 1, baseStep, baseStep);
+        return output;
+    }
+};

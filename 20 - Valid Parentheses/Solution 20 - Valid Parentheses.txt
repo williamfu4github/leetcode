@@ -1,0 +1,30 @@
+/*
+Solution 20 - Valid Parentheses
+O(n) time
+O(n) space
+*/
+
+class Solution {
+public:
+    bool isValid(const string& s) {
+        stack<char> matchStack;
+        for (char c : s) {
+            if (c == '(') {
+                matchStack.push(')');
+            }
+            else if (c == '[') {
+                matchStack.push(']');
+            }
+            else if (c == '{') {
+                matchStack.push('}');
+            }
+            else {
+                if (matchStack.empty() || (matchStack.top() != c)) {
+                    return false;
+                }
+                matchStack.pop();
+            }
+        }
+        return matchStack.empty();
+    }
+};

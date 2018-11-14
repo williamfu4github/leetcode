@@ -1,0 +1,33 @@
+/*
+Solution 94 - Binary Tree Inorder Traversal
+trivial recursion
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+private:
+    void traverse(vector<int>& nums, TreeNode* current) {
+        if (current == NULL) {
+            return;
+        }
+        this->traverse(nums, current->left);
+        nums.push_back(current->val);
+        this->traverse(nums, current->right);
+    }
+
+public:    
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> nums;
+        this->traverse(nums, root);
+        return nums;
+    }
+};

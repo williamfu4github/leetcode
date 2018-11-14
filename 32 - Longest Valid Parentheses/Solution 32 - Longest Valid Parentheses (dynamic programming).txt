@@ -1,0 +1,23 @@
+/*
+Solution 32 - Longest Valid Parentheses
+dynamic programming approach
+O(n) time, one pass
+O(n) space
+*/
+
+class Solution {
+public:
+    int longestValidParentheses(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        int longest = 0;
+        vector<int> dp(sSize, 0);
+        for (int i = 1; i < sSize; i ++) {
+            int index = i - dp[i - 1] - 1;
+            if ((s[i] == ')') && (index >= 0) && (s[index] == '(')) {
+                dp[i] = 2 + dp[i - 1] + ((index - 1 >= 0) ? dp[index - 1] : 0);
+                longest = std::max(longest, dp[i]);
+            }
+        }
+        return longest;
+    }
+};

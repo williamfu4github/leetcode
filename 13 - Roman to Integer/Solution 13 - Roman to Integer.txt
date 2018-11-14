@@ -1,0 +1,23 @@
+/*
+Solution 13 - Roman to Integer
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    int romanToInt(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        unordered_map<char, int> valueMap{{'I', 1}, {'V', 5}, {'X', 10}, {'L', 50}, {'C', 100}, {'D', 500}, {'M', 1000}};
+        int value = 0;
+        for (int i = 0; i < sSize; i ++) {
+            if ((i + 1 < sSize) && (valueMap[s[i]] < valueMap[s[i + 1]])) {
+                value -= valueMap[s[i]];
+            }
+            else {
+                value += valueMap[s[i]];
+            }
+        }
+        return value;
+    }
+};

@@ -1,0 +1,20 @@
+/*
+Solution 190 - Reverse Bits
+use a lookup table as cache
+O(n/k) time, where k is the lookup unit
+O(2^k) space
+*/
+
+class Solution {
+public:
+    uint32_t reverseBits(uint32_t n) {
+        array<unsigned char, 16> reversedBytes{0x00, 0x08, 0x04, 0x0c, 0x02, 0x0a, 0x06, 0x0e, 0x01, 0x09, 0x05, 0x0d, 0x03, 0x0b, 0x07, 0x0f};
+        uint32_t reversed = 0;
+        for (int i = 0; i < 8; i ++) {
+            reversed <<= 4;
+            reversed |= reversedBytes[n & 0x0f];
+            n >>= 4;
+        }
+        return reversed;
+    }
+};

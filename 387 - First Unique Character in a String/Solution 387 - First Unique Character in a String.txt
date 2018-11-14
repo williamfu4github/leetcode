@@ -1,0 +1,22 @@
+/*
+Solution 387 - First Unique Character in a String
+O(n) time, two passes
+O(n) space
+*/
+
+class Solution {
+public:
+    int firstUniqChar(const string& s) {
+        unordered_map<char, int> charCount;    // <char, count>
+        for (char c : s) {
+            charCount[c] ++;
+        }
+        int sSize = static_cast<int>(s.size());
+        for (int i = 0; i < sSize; i ++) {
+            if (charCount[s[i]] == 1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+};

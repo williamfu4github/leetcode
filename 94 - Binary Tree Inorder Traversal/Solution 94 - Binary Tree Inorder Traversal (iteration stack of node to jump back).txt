@@ -1,0 +1,36 @@
+/*
+Solution 94 - Binary Tree Inorder Traversal
+iteration, use stack to record node to jump back
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> nums;
+        stack<TreeNode*> returnNode;
+        TreeNode* current = root;
+        while ((current != NULL) || (!returnNode.empty())) {
+            if (current != NULL) {
+                returnNode.push(current);
+                current = current->left;
+            }
+            else {
+                current = returnNode.top();
+                returnNode.pop();
+                nums.push_back(current->val);
+                current = current->right;
+            }
+        }
+        return nums;
+    }
+};

@@ -1,0 +1,44 @@
+/*
+Solution 394 - Decode String
+recursive approach
+O(n^2) time
+*/
+
+class Solution {
+public:
+    string decodeString(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        string output;
+        int i = 0;
+        while (i < sSize) {
+            if (std::isdigit(s[i])) {
+                int numStart = i;
+                while (std::isdigit(s[i])) {
+                    i ++;
+                }
+                int num = std::stoi(s.substr(numStart, i - numStart));
+                int balance = 1;
+                i ++;
+                int innerStart = i;
+                while (balance > 0) {
+                    if (s[i] == '[') {
+                        balance ++;
+                    }
+                    else if (s[i] == ']') {
+                        balance --;
+                    }
+                    i ++;
+                }
+                string innerString = this->decodeString(s.substr(innerStart, i - innerStart - 1));
+                for (int j = 0; j < num; j ++) {
+                    output += innerString;
+                }
+            }
+            else {
+                output += s[i];
+                i ++;
+            }
+        }
+        return output;
+    }
+};

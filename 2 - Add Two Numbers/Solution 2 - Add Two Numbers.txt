@@ -1,0 +1,32 @@
+/*
+Solution 2 - Add Two Numbers
+O(n) time
+O(1) space
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummyHead = new ListNode(0);
+        ListNode* current = dummyHead;
+        int prop = 0;
+        while ((l1 != NULL) || (l2 != NULL) || (prop == 1)) {
+            int sum = prop + ((l1 == NULL) ? 0 : l1->val) + ((l2 == NULL) ? 0 : l2->val);
+            prop = sum / 10;
+            current->next = new ListNode(sum % 10);
+            current = current->next;
+            l1 = ((l1 == NULL) ? NULL : l1->next);
+            l2 = ((l2 == NULL) ? NULL : l2->next);
+        }
+        return dummyHead->next;
+    }
+};

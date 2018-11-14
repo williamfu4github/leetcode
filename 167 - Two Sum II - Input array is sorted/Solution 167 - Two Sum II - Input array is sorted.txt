@@ -1,0 +1,27 @@
+/*
+Solution 167 - Two Sum II - Input array is sorted
+two pointer approach
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    vector<int> twoSum(const vector<int>& numbers, int target) {
+        int numbersSize = static_cast<int>(numbers.size());
+        int i = 0;
+        int j = numbersSize - 1;
+        while (i < j) {
+            if (numbers[i] + numbers[j] < target) {
+                i ++;
+            }
+            else if (numbers[i] + numbers[j] == target) {
+                return vector<int>{i + 1, j + 1};
+            }
+            else {
+                j --;
+            }
+        }
+        return vector<int>{};    // redundant
+    }
+};

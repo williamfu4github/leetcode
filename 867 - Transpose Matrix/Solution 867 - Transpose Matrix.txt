@@ -1,0 +1,21 @@
+/*
+Solution 867 - Transpose Matrix
+O(n*m) time
+O(n*m) space
+*/
+
+class Solution {
+public:
+    vector<vector<int>> transpose(const vector<vector<int>>& A) {
+        int rowSize = static_cast<int>(A.size());
+        int columnSize = static_cast<int>(A[0].size());
+        vector<vector<int>> output;
+        for (int j = 0; j < columnSize; j ++) {
+            output.push_back(vector<int>{});
+            for (int i = 0; i < rowSize; i ++) {
+                output.back().push_back(A[i][j]);
+            }
+        }
+        return output;
+    }
+};

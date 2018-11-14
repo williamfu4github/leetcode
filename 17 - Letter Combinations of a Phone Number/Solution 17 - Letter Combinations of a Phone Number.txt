@@ -1,0 +1,34 @@
+/*
+Solution 17 - Letter Combinations of a Phone Number
+recursive DFS
+O(n) space, if output space doesn't count
+*/
+
+class Solution {
+private:
+    void dfs(const string& digits, vector<string>& output, string& soFar, int index) {
+        array<string, 10> letterLookup{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        int digitsSize = static_cast<int>(digits.size());
+        if (index == digitsSize) {
+            output.push_back(soFar);
+            return;
+        }
+        for (char c : letterLookup[digits[index] - '0']) {
+            soFar.push_back(c);
+            this->dfs(digits, output, soFar, index + 1);
+            soFar.pop_back();
+        }
+    }
+    
+public:
+    vector<string> letterCombinations(const string& digits) {
+        // empty string is a special case to avoid {""};
+        if (digits.empty()) {
+            return vector<string>{};
+        }
+        vector<string> output;
+        string soFar;
+        this->dfs(digits, output, soFar, 0);
+        return output;
+    }
+};

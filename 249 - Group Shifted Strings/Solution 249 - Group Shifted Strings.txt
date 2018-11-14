@@ -1,0 +1,28 @@
+/*
+Solution 249 - Group Shifted Strings
+find signature for each string
+O(n) time, where n is the size of all letters
+O(n) space
+*/
+
+class Solution {
+public:
+    vector<vector<string>> groupStrings(const vector<string>& strings) {
+        vector<vector<string>> output;
+        unordered_map<string, int> indexMap;    // <signature, index>
+        for (const string& s : strings) {
+            string signature;
+            int shift = (s.empty() ? 0 : s[0] - 'a');
+            for (char c : s) {
+                signature += ((c - shift < 'a') ? (c - shift + 26) : (c - shift));
+            }
+            if (indexMap.count(signature) == 0) {
+                int index = static_cast<int>(indexMap.size());
+                indexMap[signature] = index;
+                output.push_back(vector<string>{});
+            }
+            output[indexMap[signature]].push_back(s);
+        }
+        return output;
+    }
+};

@@ -1,0 +1,24 @@
+/*
+Solution 32 - Longest Valid Parentheses
+O(n) time, one pass
+O(n) space
+*/
+
+class Solution {
+public:
+    int longestValidParentheses(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        int longest = 0;
+        stack<int> matchStack;
+        for (int i = 0; i < sSize; i ++) {
+            if ((s[i] == ')') && !matchStack.empty() && (s[matchStack.top()] == '(')) {
+                matchStack.pop();
+                longest = std::max(longest, i - (matchStack.empty() ? -1 : matchStack.top()));
+            }
+            else {
+                matchStack.push(i);
+            }
+        }
+        return longest;
+    }
+};

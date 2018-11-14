@@ -1,0 +1,31 @@
+/*
+Solution 320 - Generalized Abbreviation
+iterative BFS approach
+O(2^n) time
+O(2^n) space
+*/
+
+class Solution {
+private:
+    string finalizeString(pair<string, int> s) {
+        return ((s.second == 0) ? s.first : (s.first + std::to_string(s.second)));
+    }
+    
+public:
+    vector<string> generateAbbreviations(const string& word) {
+        deque<pair<string, int>> soFar{make_pair("", 0)};
+        for (char c : word) {
+            int soFarSize = static_cast<int>(soFar.size());
+            for (int i = 0; i < soFarSize; i ++) {
+                soFar.push_back(make_pair(this->finalizeString(soFar.front()) + c, 0));
+                soFar.push_back(make_pair(soFar.front().first, soFar.front().second + 1));
+                soFar.pop_front();
+            }
+        }
+        vector<string> abbrs;
+        for (pair<string, int> s : soFar) {
+            abbrs.push_back(this->finalizeString(s));
+        }
+        return abbrs;
+    }
+};

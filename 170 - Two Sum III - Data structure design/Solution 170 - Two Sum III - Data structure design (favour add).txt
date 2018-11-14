@@ -1,0 +1,36 @@
+/*
+Solution 170 - Two Sum III - Data structure design
+favour add design
+O(1) time add, O(n) time find
+O(n) space, where n is number added
+also have favour find design
+*/
+
+class TwoSum {
+private:
+    unordered_map<int, int> numMap;    // <num, amount>
+    
+public:
+    TwoSum() {
+    }
+    
+    ~TwoSum() {
+    }
+    
+    void add(int number) {
+        numMap[number] ++;
+    }
+    
+    bool find(int value) {
+        for (pair<int, int> it : numMap) {
+            int comp = value - it.first;
+            if ((comp == it.first) && (numMap[comp] > 1)) {
+                return true;
+            }
+            else if ((comp != it.first) && (numMap.count(comp) == 1)) {
+                return true;
+            }
+        }
+        return false;
+    }
+};

@@ -1,0 +1,24 @@
+/*
+Solution 647 - Palindromic Substrings
+O(n^2) time
+O(1) space
+There is a O(n) time, O(n) space algorithm called Manacher's algorithm
+*/
+
+class Solution {
+public:
+    int countSubstrings(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        int count = 0;
+        for (int i = 0; i < 2 * sSize; i ++) {
+            int left = i / 2;
+            int right = left + i % 2;
+            while ((left >= 0) && (right < sSize) && (s[left] == s[right])) {
+                left --;
+                right ++;
+                count ++;
+            }
+        }
+        return count;
+    }
+};

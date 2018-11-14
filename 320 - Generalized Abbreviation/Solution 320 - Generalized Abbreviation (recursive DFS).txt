@@ -1,0 +1,30 @@
+/*
+Solution 320 - Generalized Abbreviation
+recursive DFS approach
+O(2^n) time
+O(n) space
+*/
+
+class Solution {
+private:
+    string finalizeString(string soFar, int count) {
+        return ((count == 0) ? soFar : (soFar + std::to_string(count)));
+    }
+    
+    void dfs(const string& word, vector<string>& abbrs, string soFar, int count, int index) {
+        int wordSize = static_cast<int>(word.size());
+        if (index == wordSize) {
+            abbrs.push_back(this->finalizeString(soFar, count));
+            return;
+        }
+        this->dfs(word, abbrs, this->finalizeString(soFar, count) + word[index], 0, index + 1);
+        this->dfs(word, abbrs, soFar, count + 1, index + 1);
+    }
+    
+public:
+    vector<string> generateAbbreviations(const string& word) {
+        vector<string> abbrs;
+        this->dfs(word, abbrs, "", 0, 0);
+        return abbrs;
+    }
+};

@@ -1,0 +1,34 @@
+/*
+Solution 408 - Valid Word Abbreviation
+two pointers approach
+mind the tricky leading 0 corner case
+*/
+
+class Solution {
+public:
+    bool validWordAbbreviation(const string& word, const string& abbr) {
+        int wordSize = static_cast<int>(word.size());
+        int abbrSize = static_cast<int>(abbr.size());
+        int wordIndex = 0;
+        int abbrIndex = 0;
+        while ((wordIndex < wordSize) && (abbrIndex < abbrSize)) {
+            if (std::isdigit(abbr[abbrIndex])) {
+                if (abbr[abbrIndex] == '0') {
+                    return false;
+                }
+                wordIndex += std::stoi(abbr.substr(abbrIndex));
+                while ((abbrIndex < abbrSize) && std::isdigit(abbr[abbrIndex])) {
+                    abbrIndex ++;
+                }
+            }
+            else {
+                if (word[wordIndex] != abbr[abbrIndex]) {
+                    return false;
+                }
+                wordIndex ++;
+                abbrIndex ++;
+            }
+        }
+        return ((wordIndex == wordSize) && (abbrIndex == abbrSize));
+    }
+};

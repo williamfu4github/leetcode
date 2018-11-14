@@ -1,0 +1,31 @@
+/*
+Solution 110 - Balanced Binary Tree
+need both isBalanced and depth info in return value
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+private:
+    pair<bool, int> balancedAndDepth(TreeNode* current) {
+        if (current == NULL) {
+            return make_pair(true, 0);
+        }
+        pair<bool, int> left = this->balancedAndDepth(current->left);
+        pair<bool, int> right = this->balancedAndDepth(current->right);
+        return make_pair((left.first && right.first && (std::abs(left.second - right.second) <= 1)), std::max(left.second, right.second) + 1);
+    }
+    
+public:
+    bool isBalanced(TreeNode* root) {
+        return this->balancedAndDepth(root).first;
+    }
+};

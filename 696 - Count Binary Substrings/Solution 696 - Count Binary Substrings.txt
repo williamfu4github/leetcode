@@ -1,0 +1,28 @@
+/*
+Solution 696 - Count Binary Substrings
+linear scan the string, and find chunks
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    int countBinarySubstrings(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        int substrCount = 0;
+        int previousCount = 0;
+        int count = 1;
+        for (int i = 1; i < sSize; i ++) {
+            if (s[i] == s[i - 1]) {
+                count ++;
+            }
+            else {
+                substrCount += std::min(previousCount, count);
+                previousCount = count;
+                count = 1;
+            }
+        }
+        substrCount += std::min(previousCount, count);
+        return substrCount;
+    }
+};

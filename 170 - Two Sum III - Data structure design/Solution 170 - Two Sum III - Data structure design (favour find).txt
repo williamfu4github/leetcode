@@ -1,0 +1,31 @@
+/*
+Solution 170 - Two Sum III - Data structure design
+favour find design
+O(n) time add, O(1) time find
+O(n^2) space, where n is number added
+also have favour add design
+*/
+
+class TwoSum {
+private:
+    vector<int> nums;
+    unordered_set<int> sums;
+    
+public:
+    TwoSum() {
+    }
+    
+    ~TwoSum() {
+    }
+    
+    void add(int number) {
+        for (int n : nums) {
+            sums.insert(n + number);
+        }
+        nums.push_back(number);
+    }
+    
+    bool find(int value) {
+        return (sums.count(value) == 1);
+    }
+};

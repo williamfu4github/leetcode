@@ -1,0 +1,26 @@
+/*
+Solution 761 - Special Binary String
+O(n^2) time
+O(n) space
+*/
+
+class Solution {
+public:
+    string makeLargestSpecial(const string& S) {
+        int sSize = static_cast<int>(S.size());
+        vector<string> groups;
+        int i = 0;
+        while (i < sSize) {
+            int j = i + 1;
+            int balance = 1;
+            while (balance > 0) {
+                balance += ((S[j] == '1') ? 1 : -1);
+                j ++;
+            }
+            groups.push_back('1' + this->makeLargestSpecial(S.substr(i + 1, j - i - 2)) + '0');
+            i = j;
+        }
+        std::sort(groups.begin(), groups.end(), std::greater<string>());
+        return std::accumulate(groups.cbegin(), groups.cend(), string{});
+    }
+};

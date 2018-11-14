@@ -1,0 +1,28 @@
+/*
+Solution 11 - Container With Most Water
+two pointer approach
+move the min of two ends
+moving the max of two ends can only provide smaller candidates because the height is bounded by the min value and width is strictly less
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    int maxArea(const vector<int>& height) {
+        int heightSize = static_cast<int>(height.size());
+        int maxWater = 0;
+        int i = 0;
+        int j = heightSize - 1;
+        while (i < j) {
+            maxWater = std::max(maxWater, std::min(height[i], height[j]) * (j - i));
+            if (height[i] <= height[j]) {
+                i ++;
+            }
+            else {
+                j --;
+            }
+        }
+        return maxWater;
+    }
+};

@@ -1,0 +1,33 @@
+/*
+Solution 678 - Valid Parenthesis String
+base on the fact that the possible balance count are continuous
+we only need to keep track of low and high balances, and keep the possible ranges
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    bool checkValidString(const string& s) {
+        int low = 0;
+        int high = 0;
+        for (char c : s) {
+            if (c == '(') {
+                low ++;
+                high ++;
+            }
+            else if (c == '*') {
+                low = std::max(low - 1, 0);
+                high ++;
+            }
+            else {
+                low = std::max(low - 1, 0);
+                high --;
+            }
+            if (high < 0) {
+                return false;
+            }
+        }
+        return (low == 0);
+    }
+};

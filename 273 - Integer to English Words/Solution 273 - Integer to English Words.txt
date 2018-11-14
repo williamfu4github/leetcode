@@ -1,0 +1,56 @@
+/*
+Solution 273 - Integer to English Words
+pattern finding
+*/
+
+class Solution {
+private:
+    string addUnit(const string& amount, const string& unit) {
+        if (unit.empty()) {
+            return amount;
+        }
+        return (amount.empty() ? "" : (amount + " " + unit));
+    }
+    
+    string appendWords(const string& words1, const string& words2) {
+        return ((!words1.empty() && !words2.empty()) ? (words1 + " " + words2) : (words1 + words2));
+    }
+    
+    string onesToWords(int digit) {
+        array<string, 10> mapping{"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
+        return mapping[digit];
+    }
+    
+    string tensToWords(int digit) {
+        array<string, 10> mapping{"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+        return mapping[digit];
+    }
+    
+    string tensAndOnesToWords(int num) {
+        if (num < 10) {
+            return this->onesToWords(num);
+        }
+        else if (num < 20) {
+            array<string, 10> mapping{"Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+            return mapping[num - 10];
+        }
+        else {
+            return this->appendWords(this->tensToWords(num / 10), this->onesToWords(num % 10));
+        }
+    }
+    
+    string threeDigitsToWords(int num) {
+        return this->appendWords(this->addUnit(this->onesToWords(num / 100), "Hundred"), this->tensAndOnesToWords(num % 100));
+    }
+    
+public:
+    string numberToWords(int num) {
+        array<string, 4> mapping{"", "Thousand", "Million", "Billion"};
+        string words;
+        for (int i = 0; i < 4; i ++) {
+            words = this->appendWords(this->addUnit(this->threeDigitsToWords(num % 1000), mapping[i]), words);
+            num /= 1000;
+        }
+        return (words.empty() ? "Zero" : words);
+    }
+};

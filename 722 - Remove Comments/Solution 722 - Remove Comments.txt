@@ -1,0 +1,44 @@
+/*
+Solution 722 - Remove Comments
+O(n) time, one pass
+O(n) space
+*/
+
+class Solution {
+public:
+    vector<string> removeComments(const vector<string>& source) {
+        vector<string> output;
+        bool inBlockComment = false;
+        string newLine;
+        for (const string& line : source) {
+            int lineSize = static_cast<int>(line.size());
+            int i = 0;
+            while (i < lineSize) {
+                if (inBlockComment) {
+                    if ((i + 1 < lineSize) && (line[i] == '*') && (line[i + 1] == '/')) {
+                        inBlockComment = false;
+                        i ++;
+                    }
+                }
+                else {
+                    if ((i + 1 < lineSize) && (line[i] == '/') && (line[i + 1] == '*')) {
+                        inBlockComment = true;
+                        i ++;
+                    }
+                    else if ((i + 1 < lineSize) && (line[i] == '/') && (line[i + 1] == '/')) {
+                        i = lineSize;
+                    }
+                    else {
+                        newLine += line[i];
+                    }
+                }
+                i ++;
+            }
+            if (!inBlockComment && !newLine.empty()) {
+                output.push_back(newLine);
+                newLine = "";
+            }
+        }
+        return output;
+    }
+};

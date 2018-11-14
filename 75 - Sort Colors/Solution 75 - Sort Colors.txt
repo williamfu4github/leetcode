@@ -1,0 +1,31 @@
+/*
+Solution 75 - Sort Colors
+three pointer approach
+O(n) time, one pass
+O(1) space
+*/
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int numsSize = static_cast<int>(nums.size());
+        int i = 0;
+        int j = numsSize - 1;
+        int k = 0;
+        // loop invariant: i <= k <= j, nums before i are all 0, nums between i and k are all 1s, nums after j are all 2s
+        while (k <= j) {
+            if (nums[k] == 0) {
+                std::swap(nums[k], nums[i]);
+                i ++;
+                k ++;
+            }
+            else if (nums[k] == 1) {
+                k ++;
+            }
+            else {
+                std::swap(nums[k], nums[j]);
+                j --;
+            }
+        }
+    }
+};

@@ -1,0 +1,22 @@
+/*
+Solution 169 - Majority Element
+Boyer-Moore Voting Algorithm
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    int majorityElement(const vector<int>& nums) {
+        int candidate;
+        int count = 0;
+        for (int n : nums) {
+            if (count == 0) {
+                candidate = n;
+            }
+            count += ((n == candidate) ? 1 : -1);
+        }
+        // candidate must be a majority element by assumption, skipping verification step
+        return candidate;
+    }
+};

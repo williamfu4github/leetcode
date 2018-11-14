@@ -1,0 +1,28 @@
+/*
+Solution 451 - Sort Characters By Frequency
+regular sort approach
+using a priority_queue doesn't speed up here, because we need all the elements in sorting orders
+O(n + mlogm) time, where m is the number of unique chars
+O(m) space
+can also use bucket sort approach, which will have a better worst case of O(n) time vs. O(nlogn) time in this approach
+*/
+
+class Solution {
+public:
+    string frequencySort(const string& s) {
+        unordered_map<char, int> charCount;    // <char, count>
+        for (char c : s) {
+            charCount[c] ++;
+        }
+        vector<pair<int, char>> counts;    // <count, char>
+        for (pair<char, int> e : charCount) {
+            counts.push_back(make_pair(e.second, e.first));
+        }
+        std::sort(counts.begin(), counts.end(), std::greater<pair<int, char>>());
+        string output;
+        for (pair<int, char> e : counts) {
+            output.append(e.first, e.second);
+        }
+        return output;
+    }
+};

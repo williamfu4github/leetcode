@@ -1,0 +1,44 @@
+/*
+Solution 329 - Longest Increasing Path in a Matrix
+top-down dynamic programming approach
+O(n*m) time
+O(n*m) space
+*/
+
+class Solution {
+private:
+    void calculateDPValue(const vector<vector<int>>& matrix, vector<vector<int>>& dp, int i, int j) {
+        int rowSize = static_cast<int>(matrix.size());
+        int columnSize = static_cast<int>(matrix[0].size());
+        array<pair<int, int>, 4> neighbours{make_pair(-1, 0), make_pair(1, 0), make_pair(0, -1), make_pair(0, 1)};
+        if (dp[i][j] == 0) {
+            dp[i][j] = 1;
+            for (pair<int, int> e : neighbours) {
+                int x = i + e.first;
+                int y = j + e.second;
+                if ((x >= 0) && (x < rowSize) && (y >= 0) && (y < columnSize) && (matrix[x][y] > matrix[i][j])) {
+                    this->calculateDPValue(matrix, dp, x, y);
+                    dp[i][j] = std::max(dp[i][j], 1 + dp[x][y]);
+                }
+            }
+        }
+    }
+    
+public:
+    int longestIncreasingPath(const vector<vector<int>>& matrix) {
+        if (matrix.empty()) {
+            return 0;
+        }
+        int rowSize = static_cast<int>(matrix.size());
+        int columnSize = static_cast<int>(matrix[0].size());
+        vector<vector<int>> dp(rowSize, vector<int>(columnSize, 0));
+        int longest = 0;
+        for (int i = 0; i < rowSize; i ++) {
+            for (int j = 0; j < columnSize; j ++) {
+                this->calculateDPValue(matrix, dp, i, j);
+                longest = std::max(longest, dp[i][j]);
+            }
+        }
+        return longest;
+    }
+};

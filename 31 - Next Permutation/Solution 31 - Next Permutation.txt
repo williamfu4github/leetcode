@@ -1,0 +1,30 @@
+/*
+Solution 31 - Next Permutation
+invariant: i point to first decreasing index from the back, i may be invalid, but i + 1 must be valid
+note: if i >= 0, then nums[i] < nums[i + 1], so j cannot equal i
+note: swaping nums[i] and nums[j] will not change the sorted order of nums[i + 1 : numsSize)
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        if (nums.empty()) {
+            return;
+        }
+        int numsSize = static_cast<int>(nums.size());
+        int i = numsSize - 2;
+        while ((i >= 0) && (nums[i] >= nums[i + 1])) {
+            i --;
+        }
+        if (i >= 0) {
+            int j = numsSize - 1;
+            while (nums[j] <= nums[i]) {
+                j --;
+            }
+            std::swap(nums[i], nums[j]);    
+        }
+        std::reverse(nums.begin() + i + 1, nums.end());
+    }
+};

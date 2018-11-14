@@ -1,0 +1,18 @@
+/*
+Solution 168 - Excel Sheet Column Title
+O(logn) time
+*/
+
+class Solution {
+public:
+    string convertToTitle(int n) {
+        string title;
+        while (n > 0) {
+            n --;
+            char c = 'A' + (n % 26);
+            title = c + title;
+            n /= 26;
+        }
+        return title;
+    }
+};

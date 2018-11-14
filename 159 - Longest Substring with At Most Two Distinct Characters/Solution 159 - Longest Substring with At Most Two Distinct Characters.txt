@@ -1,0 +1,30 @@
+/*
+Solution 159 - Longest Substring with At Most Two Distinct Characters
+sliding window approach
+O(n) time
+O(1) space
+*/
+
+class Solution {
+public:
+    int lengthOfLongestSubstringTwoDistinct(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        unordered_map<char, int> countMap;    // <char, count>
+        int longest = 0;
+        int i = -1;
+        for (int j = 0; j < sSize; j ++) {
+            countMap[s[j]] ++;
+            int mapSize = static_cast<int>(countMap.size());
+            while (mapSize > 2) {
+                i ++;
+                countMap[s[i]] --;
+                if (countMap[s[i]] == 0) {
+                    countMap.erase(s[i]);
+                }
+                mapSize = static_cast<int>(countMap.size());
+            }
+            longest = std::max(longest, j - i);
+        }
+        return longest;
+    }
+};

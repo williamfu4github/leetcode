@@ -1,0 +1,24 @@
+/*
+Solution 3 - Longest Substring Without Repeating Characters
+sliding window approach with a map
+O(n) time, one pass only
+O(n) space
+*/
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(const string& s) {
+        int sSize = static_cast<int>(s.size());
+        unordered_map<char, int> indexMap;    // <char, index>
+        int longest = 0;
+        int i = -1;
+        for (int j = 0; j < sSize; j ++) {
+            if ((indexMap.count(s[j]) == 1) && (indexMap[s[j]] > i)) {
+                i = indexMap[s[j]];
+            }
+            longest = std::max(longest, j - i);
+            indexMap[s[j]] = j;
+        }
+        return longest;
+    }
+};

@@ -1,0 +1,23 @@
+/*
+Solution 560 - Subarray Sum Equals K
+if sum[0, i] + k = sum[0, j], then sum(i, j] = k
+O(n) time
+O(n) space
+*/
+
+class Solution {
+public:
+    int subarraySum(const vector<int>& nums, int k) {
+        unordered_map<int, int> sumMap{{0, 1}};    // <sum, count>
+        int sum = 0;
+        int count = 0;
+        for (int n : nums) {
+            sum += n;
+            if (sumMap.count(sum - k) == 1) {
+                count += sumMap[sum - k];
+            }
+            sumMap[sum] ++;
+        }
+        return count;
+    }
+};

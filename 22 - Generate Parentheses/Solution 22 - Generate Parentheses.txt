@@ -1,0 +1,36 @@
+/*
+Solution 22 - Generate Parentheses
+recursive DFS
+the size of output follows Catalan number
+O(Catalan Number) time
+O(n) space, if output space doesn't count
+could also use dynamic programming approach, following grammar rule A -> E | A(A)
+*/
+
+class Solution {
+private:
+    void dfs(vector<string>& output, string& soFar, int n, int left, int right) {
+        if (right == n) {
+            output.push_back(soFar);
+            return;
+        }
+        if (left < n) {
+            soFar.push_back('(');
+            this->dfs(output, soFar, n, left + 1, right);
+            soFar.pop_back();
+        }
+        if (right < left) {
+            soFar.push_back(')');
+            this->dfs(output, soFar, n, left, right + 1);
+            soFar.pop_back();
+        }
+    }
+    
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> output;
+        string soFar;
+        this->dfs(output, soFar, n, 0, 0);
+        return output;
+    }
+};

@@ -1,0 +1,36 @@
+/*
+Solution 369 - Plus One Linked List
+fast and slow pointers approach
+O(n) time
+O(1) space
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* plusOne(ListNode* head) {
+        ListNode* newHead = new ListNode(0);
+        newHead->next = head;
+        ListNode* slow = newHead;
+        ListNode* fast = head;
+        while (fast != NULL) {
+            if (fast->val != 9) {
+                slow = fast;
+            }
+            fast = fast->next;
+        }
+        while (slow != NULL) {
+            slow->val = (slow->val + 1) % 10;
+            slow = slow->next;
+        }
+        return ((newHead->val == 0) ? head : newHead);
+    }
+};

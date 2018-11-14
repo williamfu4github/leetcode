@@ -1,0 +1,47 @@
+/*
+Solution 445 - Add Two Numbers II
+O(n) time
+O(1) space
+can also reverse input lists, generate output list, then reverse output list
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        vector<int> num1;
+        vector<int> num2;
+        while (l1 != NULL) {
+            num1.push_back(l1->val);
+            l1 = l1->next;
+        }
+        while (l2 != NULL) {
+            num2.push_back(l2->val);
+            l2 = l2->next;
+        }
+        int num1Size = static_cast<int>(num1.size());
+        int num2Size = static_cast<int>(num2.size());
+        ListNode* current = NULL;
+        int i = num1Size - 1;
+        int j = num2Size - 1;
+        int prop = 0;
+        while ((i >= 0) || (j >= 0) || (prop == 1)) {
+            int sum = ((i >= 0) ? num1[i] : 0) + ((j >= 0) ? num2[j] : 0) + prop;
+            ListNode* newNode = new ListNode(sum % 10);
+            newNode->next = current;
+            current = newNode;
+            prop = sum / 10;
+            i --;
+            j --;
+        }
+        return current;
+    }
+};

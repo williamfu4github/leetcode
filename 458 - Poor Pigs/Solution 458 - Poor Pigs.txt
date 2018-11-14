@@ -1,0 +1,12 @@
+/*
+Solution 458 - Poor Pigs
+O(1) time
+O(1) space
+*/
+
+class Solution {
+public:
+    int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+        return static_cast<int>(ceil(log(buckets) / log(minutesToTest / minutesToDie + 1)));
+    }
+};

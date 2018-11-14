@@ -1,0 +1,29 @@
+/*
+Solution 77 - Combinations
+recursive DFS approach
+*/
+
+class Solution {
+private:
+    void dfs(vector<vector<int>>& output, vector<int>& soFar, int n, int k) {
+        if (k == 0) {
+            output.push_back(soFar);
+            return;
+        }
+        else if (n == 0) {
+            return;
+        }
+        soFar.push_back(n);
+        this->dfs(output, soFar, n - 1, k - 1);
+        soFar.pop_back();
+        this->dfs(output, soFar, n - 1, k);
+    }
+    
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> output;
+        vector<int> soFar;
+        this->dfs(output, soFar, n, k);
+        return output;
+    }
+};
