@@ -11,12 +11,13 @@ private:
         int digitsSize = static_cast<int>(digits.size());
         if (index == digitsSize) {
             output.push_back(soFar);
-            return;
         }
-        for (char c : letterLookup[digits[index] - '0']) {
-            soFar.push_back(c);
-            this->dfs(digits, output, soFar, index + 1);
-            soFar.pop_back();
+        else {
+            for (char c : letterLookup[digits[index] - '0']) {
+                soFar.push_back(c);
+                this->dfs(digits, output, soFar, index + 1);
+                soFar.pop_back();
+            }   
         }
     }
     

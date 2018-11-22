@@ -1,0 +1,33 @@
+/*
+Solution 19 - Remove Nth Node From End of List
+O(n) time, virtual one pass
+O(1) space
+*/
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummyHead = new ListNode(0);
+        dummyHead->next = head;
+        ListNode* fast = dummyHead;
+        for (int i = 0; i < n + 1; i ++) {
+            fast = fast->next;
+        }
+        ListNode* slow = dummyHead;
+        while (fast != NULL) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        slow->next = slow->next->next;
+        return dummyHead->next;
+    }
+};

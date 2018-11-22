@@ -1,0 +1,35 @@
+/*
+Solution 16 - 3Sum Closest
+base on 3-sum problem
+O(n^2) time
+O(1) space
+*/
+
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        int numsSize = static_cast<int>(nums.size());
+        std::sort(nums.begin(), nums.end());
+        int closest = nums[0] + nums[1] + nums[2];
+        for (int k = 0; k < numsSize; k ++) {
+            int i = k + 1;
+            int j = numsSize - 1;
+            while (i < j) {
+                int candidate = nums[k] + nums[i] + nums[j];
+                if (std::abs(target - candidate) < std::abs(target - closest)) {
+                    closest = candidate;
+                }
+                if (candidate < target) {
+                    i ++;
+                }
+                else if (candidate == target) {
+                    return closest;
+                }
+                else {
+                    j --;
+                }
+            }
+        }
+        return closest;
+    }
+};
