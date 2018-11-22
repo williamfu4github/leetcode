@@ -1,0 +1,35 @@
+/*
+Solution 543 - Diameter of Binary Tree
+O(n) time
+O(logn) space for balanced tree
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+
+class Solution {
+private:
+    pair<int, int> diameterAndPath(TreeNode* current) {
+        // return <longestPath, longestDiameter>
+        if (current == NULL) {
+            return make_pair(0, 0);
+        }
+        else {
+            pair<int, int> left = this->diameterAndPath(current->left);
+            pair<int, int> right = this->diameterAndPath(current->right);
+            return make_pair(std::max(left.first, right.first) + 1, std::max({left.second, right.second, left.first + right.first + 1}));
+        }
+    }
+    
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        return ((root == NULL) ? 0 : this->diameterAndPath(root).second - 1);
+    }
+};

@@ -1,0 +1,26 @@
+/*
+Solution 14 - Longest Common Prefix
+vertical comparison, this will take O(s) time and O(1) space, where s is the length of sum of all strings
+make a prefix trie will take O(s) time and O(s) space, query will take O(a) time, where a is the length of the shortest string, so it won't help for a single query. However, it will save significant amount of time if there are multiple queries.
+*/
+
+class Solution {
+public:
+    string longestCommonPrefix(const vector<string>& strs) {
+        if (strs.empty()) {
+            return "";
+        }
+        int shortest = static_cast<int>(strs.front().size());
+        for (string s : strs) {
+            shortest = std::min(shortest, static_cast<int>(s.size()));
+        }
+        for (int i = 0; i < shortest; i ++) {
+            for (string s : strs) {
+                if (s[i] != strs.front()[i]) {
+                    return strs.front().substr(0, i);
+                }
+            }
+        }
+        return strs.front().substr(0, shortest);
+    }
+};

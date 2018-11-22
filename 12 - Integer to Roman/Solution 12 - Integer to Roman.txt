@@ -1,6 +1,5 @@
 /*
 Solution 12 - Integer to Roman
-pattern finding
 */
 
 class Solution {
