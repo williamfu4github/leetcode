@@ -28,7 +28,6 @@ private:
             int rightMax = this->getMaxPathToLeaf(current->right);
             maxDiameter = std::max(maxDiameter, leftMax + rightMax + 1);
             return (std::max(leftMax, rightMax) + 1);
-        }
     }
     
 public:
