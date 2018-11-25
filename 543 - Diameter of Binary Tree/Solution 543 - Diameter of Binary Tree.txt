@@ -16,20 +16,25 @@ O(logn) space for balanced tree
 
 class Solution {
 private:
-    pair<int, int> diameterAndPath(TreeNode* current) {
-        // return <longestPath, longestDiameter>
+    int maxDiameter;
+    
+private:
+    int getMaxPathToLeaf(TreeNode* current) {
         if (current == NULL) {
-            return make_pair(0, 0);
+            return 0;
         }
         else {
-            pair<int, int> left = this->diameterAndPath(current->left);
-            pair<int, int> right = this->diameterAndPath(current->right);
-            return make_pair(std::max(left.first, right.first) + 1, std::max({left.second, right.second, left.first + right.first + 1}));
+            int leftMax = this->getMaxPathToLeaf(current->left);
+            int rightMax = this->getMaxPathToLeaf(current->right);
+            maxDiameter = std::max(maxDiameter, leftMax + rightMax + 1);
+            return (std::max(leftMax, rightMax) + 1);
         }
     }
     
 public:
     int diameterOfBinaryTree(TreeNode* root) {
-        return ((root == NULL) ? 0 : this->diameterAndPath(root).second - 1);
+        maxDiameter = 0;
+        this->getMaxPathToLeaf(root);
+        return ((root == NULL) ? 0 : maxDiameter - 1);
     }
 };

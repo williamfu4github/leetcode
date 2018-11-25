@@ -12,17 +12,18 @@ private:
     void dfs(vector<string>& output, string& soFar, int n, int left, int right) {
         if (right == n) {
             output.push_back(soFar);
-            return;
         }
-        if (left < n) {
-            soFar.push_back('(');
-            this->dfs(output, soFar, n, left + 1, right);
-            soFar.pop_back();
-        }
-        if (right < left) {
-            soFar.push_back(')');
-            this->dfs(output, soFar, n, left, right + 1);
-            soFar.pop_back();
+        else {
+            if (left < n) {
+                soFar.push_back('(');
+                this->dfs(output, soFar, n, left + 1, right);
+                soFar.pop_back();
+            }
+            if (right < left) {
+                soFar.push_back(')');
+                this->dfs(output, soFar, n, left, right + 1);
+                soFar.pop_back();
+            }
         }
     }
     
